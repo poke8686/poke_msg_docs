@@ -1,6 +1,6 @@
 # MSG - 알림 자동 전달
 
-스마트폰에 오는 알림을 자동으로 문자(SMS), URL, Telegram, Discord로 전달해주는 앱입니다.
+스마트폰에 오는 알림을 자동으로 문자(SMS), URL, Telegram, Discord, Slack으로 전달해주는 앱입니다.
 특정 앱의 특정 키워드가 포함된 알림만 골라서 전달할 수 있습니다.
 
 ---
@@ -34,7 +34,8 @@
 - **URL 호출**: GET/POST 방식으로 외부 API 호출
 - **Telegram 봇**: 텔레그램 봇을 통한 메시지 전송
 - **Discord 웹훅**: Discord 채널로 자동 메시지 전송
-- SMS, URL, Telegram, Discord를 동시에 사용 가능
+- **Slack 웹훅**: Slack 채널로 자동 메시지 전송
+- SMS, URL, Telegram, Discord, Slack을 동시에 사용 가능
 
 ### 메시지 템플릿
 전달할 메시지를 자유롭게 구성할 수 있습니다:
@@ -45,13 +46,21 @@
 
 **예시:** `[{app}] {title}: {content} ({time})`
 
+### 규칙 템플릿 (프리셋)
+- 새 규칙 추가 시 용도별 템플릿 선택 가능
+- **빈 규칙**: 처음부터 직접 설정
+- **택배 알림**: 배달완료/픽업/도착 키워드 사전 설정
+- **결제 알림**: 결제/승인/출금/이체 키워드 사전 설정
+- **보안 알림**: 인증/로그인/보안/코드 키워드 사전 설정
+- **서버 알림**: Discord+Slack 전송, 서버 모니터링용 사전 설정
+
 ### 규칙 백업/복원
 - 설정한 전달 규칙을 JSON 파일로 백업
 - 알림 제외 목록도 별도 백업/복원 가능
 - 기기 변경 시 백업 파일로 간편 복원
 
 ### 전달 이력
-- SMS/URL/Telegram/Discord 전송 성공/실패 기록 확인
+- SMS/URL/Telegram/Discord/Slack 전송 성공/실패 기록 확인
 - 전송 방식별 필터링
 - 실패한 전송 재시도 버튼
 - CSV 파일로 내보내기
@@ -141,6 +150,7 @@
    - URL: GET/POST 선택 + URL 주소 입력
    - Telegram: Bot Token + Chat ID + 메시지 템플릿 입력
    - Discord: Webhook URL + 메시지 템플릿 입력
+   - Slack: Incoming Webhook URL + 메시지 템플릿 입력
 6. (선택) **제외 키워드**: 특정 단어가 포함된 알림을 제외
 7. (선택) **쿨다운**: 중복 발송 방지 시간 조절 (0~300초)
 8. **테스트 발송** 버튼으로 설정 확인
@@ -179,6 +189,14 @@ https://api.example.com/notify?title={title}&content={content}&time={time}
 3. 메시지를 보낼 채널 선택
 4. **웹후크 URL 복사** 클릭
 5. 규칙 편집 화면에서 Webhook URL 입력
+
+### Slack 웹훅 설정 방법
+1. [Slack API](https://api.slack.com/apps)에서 앱 생성
+2. **Incoming Webhooks** 활성화
+3. **Add New Webhook to Workspace** 클릭
+4. 메시지를 보낼 채널 선택 후 허용
+5. 생성된 **Webhook URL** 복사
+6. 규칙 편집 화면에서 Webhook URL 입력
 
 ---
 
